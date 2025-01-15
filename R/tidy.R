@@ -22,7 +22,8 @@ tidy.MP <- function(x, ...) {
     conf.low  = x$att - x$c * x$se,
     conf.high = x$att + x$c * x$se,
     point.conf.low  = x$att - stats::qnorm(1 - x$alp/2) * x$se,
-    point.conf.high = x$att + stats::qnorm(1 - x$alp/2) * x$se)
+    point.conf.high = x$att + stats::qnorm(1 - x$alp/2) * x$se,
+    p.value = 2 * (1 - pnorm(abs(x$att / x$se))))
   out
 }
 
@@ -59,7 +60,8 @@ tidy.AGGTEobj<- function(x, ...) {
       conf.low  = x$att.egt - x$crit.val.egt * x$se.egt,
       conf.high = x$att.egt + x$crit.val.egt * x$se.egt,
       point.conf.low  = x$att.egt - stats::qnorm(1 - x$DIDparams$alp/2) * x$se.egt,
-      point.conf.high = x$att.egt + stats::qnorm(1 - x$DIDparams$alp/2) * x$se.egt)
+      point.conf.high = x$att.egt + stats::qnorm(1 - x$DIDparams$alp/2) * x$se.egt,
+      p.value = 2 * (1 - pnorm(abs(x$att.egt / x$se.egt))))
   }
   if(x$type == "group"){
     out <- data.frame(
@@ -71,7 +73,8 @@ tidy.AGGTEobj<- function(x, ...) {
       conf.low  = c(x$overall.att - stats::qnorm(1 - x$DIDparams$alp/2) * x$overall.se, x$att.egt - x$crit.val.egt * x$se.egt),
       conf.high = c(x$overall.att + stats::qnorm(1 - x$DIDparams$alp/2) * x$overall.se, x$att.egt + x$crit.val.egt * x$se.egt),
       point.conf.low  = c(x$overall.att - stats::qnorm(1 - x$DIDparams$alp/2) * x$overall.se, x$att.egt - stats::qnorm(1 - x$DIDparams$alp/2) * x$se.egt),
-      point.conf.high = c(x$overall.att + stats::qnorm(1 - x$DIDparams$alp/2) * x$overall.se,x$att.egt + stats::qnorm(1 - x$DIDparams$alp/2) * x$se.egt))
+      point.conf.high = c(x$overall.att + stats::qnorm(1 - x$DIDparams$alp/2) * x$overall.se,x$att.egt + stats::qnorm(1 - x$DIDparams$alp/2) * x$se.egt),
+      p.value = c(2 * (1 - pnorm(abs(x$overall.att / x$overall.se))), 2 * (1 - pnorm(abs(x$att.egt / x$se.egt))))) 
      }
   
   if(x$type == "calendar"){
@@ -84,7 +87,9 @@ tidy.AGGTEobj<- function(x, ...) {
       conf.low  = x$att.egt - x$crit.val.egt * x$se.egt,
       conf.high = x$att.egt + x$crit.val.egt * x$se.egt,
       point.conf.low  = x$att.egt - stats::qnorm(1 - x$DIDparams$alp/2) * x$se.egt,
-      point.conf.high = x$att.egt + stats::qnorm(1 - x$DIDparams$alp/2) * x$se.egt)
+      point.conf.high = x$att.egt + stats::qnorm(1 - x$DIDparams$alp/2) * x$se.egt,
+      p.value = 2 * (1 - pnorm(abs(x$att.egt / x$se.egt))))
+
   }
   
   if(x$type == "simple"){
@@ -95,7 +100,8 @@ tidy.AGGTEobj<- function(x, ...) {
       conf.low  = x$overall.att - stats::qnorm(1 - x$DIDparams$alp/2) * x$overall.se,
       conf.high = x$overall.att + stats::qnorm(1 - x$DIDparams$alp/2) * x$overall.se,
       point.conf.low  = x$overall.att - stats::qnorm(1 - x$DIDparams$alp/2) * x$overall.se,
-      point.conf.high = x$overall.att + stats::qnorm(1 - x$DIDparams$alp/2) * x$overall.se)
+      point.conf.high = x$overall.att + stats::qnorm(1 - x$DIDparams$alp/2) * x$overall.se,
+      p.value = 2 * (1 - pnorm(abs(x$overall.att / x$overall.se))))
   }
   
   out
